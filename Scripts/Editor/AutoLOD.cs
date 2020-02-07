@@ -152,7 +152,7 @@ namespace Unity.AutoLOD
         {
             get
             {
-                if (s_MeshSimplifiers == null)
+                if (s_MeshSimplifiers == null || s_MeshSimplifiers.Count == 0)
                     s_MeshSimplifiers = ObjectUtils.GetImplementationsOfInterface(typeof(IMeshSimplifier)).ToList();
 
                 return s_MeshSimplifiers;
@@ -163,7 +163,7 @@ namespace Unity.AutoLOD
         {
             get
             {
-                if (s_Batchers == null)
+                if (s_Batchers == null || s_Batchers.Count == 0)
                     s_Batchers = ObjectUtils.GetImplementationsOfInterface(typeof(IBatcher)).ToList();
 
                 return s_Batchers;
@@ -204,11 +204,10 @@ namespace Unity.AutoLOD
             if (sceneLODEnabled && !SceneLOD.activated)
             {
                 if (!SceneLOD.instance)
-                    Debug.Log("SceneLOD failed to start");
+                    Debug.LogError("SceneLOD failed to start");
             }
             else if (!sceneLODEnabled && SceneLOD.activated)
             {
-                Debug.Log("Destroying SceneLOD instance");
                 UnityObject.DestroyImmediate(SceneLOD.instance);
             }
 #else
